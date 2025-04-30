@@ -36,6 +36,7 @@ response=$(curl -s -X POST \
 registration_token=$(echo "$response" | jq -r '.token')
 if [[ "$registration_token" == "null" || -z "$registration_token" ]]; then
     echo "Failed to obtain registration token"
+    echo "Received $response"
     exit 1
 fi
 
