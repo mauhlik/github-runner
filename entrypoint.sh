@@ -20,8 +20,8 @@ if [[ -n "$GITHUB_ORGANIZATION" ]]; then
     OWNER="$GITHUB_ORGANIZATION"
     ENDPOINT="${GITHUB_API_BASE_URL}/orgs/$GITHUB_ORGANIZATION/actions/runners/registration-token"
 elif [[ -n "$GITHUB_REPOSITORY" && -n "$GITHUB_OWNER" ]]; then
-    OWNER="$GITHUB_REPOSITORY"
-    ENDPOINT="${GITHUB_API_BASE_URL}/repos/$GITHUB_REPOSITORY/actions/runners/registration-token"
+    OWNER="$GITHUB_OWNER/$GITHUB_REPOSITORY"
+    ENDPOINT="${GITHUB_API_BASE_URL}/repos/$OWNER/actions/runners/registration-token"
 fi
 
 GITHUB_API_TOKEN=$(cat "$GITHUB_TOKEN_FILE")

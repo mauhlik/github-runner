@@ -2,11 +2,14 @@ FROM ubuntu:24.04
 
 ARG RUNNER_VERSION=2.323.0
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive \
+    TZ="Europe/Prague" \
+    UBUNTU_VERSION_NAME=noble
 
-ENV UBUNTU_VERSION_NAME=jammy
-
-RUN apt-get update && apt-get install -y curl jq
+RUN apt-get update && apt-get install -y curl jq locales libicu-dev && locale-gen en_US.UTF-8
 
 RUN mkdir -p /actions-runner
 WORKDIR /actions-runner
