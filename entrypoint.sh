@@ -39,9 +39,14 @@ if [[ "$registration_token" == "null" || -z "$registration_token" ]]; then
     echo "Received $response"
     exit 1
 fi
+### Command Opts
+COMMAND_OPTS=()
+if [[ -z "EPHEMERAL_RUNNER" && "$EPHEMERAL_RUNNER" == "true" ]]; then
+    COMMAND_OPTS+=("--ephemeral")
+fi
 
 echo "Configuring runner..."
-./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token"
+./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token" "${COMMAND_OPTS[@]}"
 
 echo "Starting runner..."
 ./run.sh
