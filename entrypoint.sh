@@ -40,7 +40,7 @@ if [[ "$registration_token" == "null" || -z "$registration_token" ]]; then
     exit 1
 fi
 ### Command Opts
-COMMAND_OPTS=()
+COMMAND_OPTS=("--disableupdate")
 if [[ -z "EPHEMERAL_RUNNER" && "$EPHEMERAL_RUNNER" == "true" ]]; then
     COMMAND_OPTS+=("--ephemeral")
 fi
