@@ -11,6 +11,10 @@ ENV LANG=en_US.UTF-8 \
 
 RUN apt-get update && apt-get install -y curl jq locales libicu-dev git && locale-gen en_US.UTF-8
 
+COPY scripts/ /usr/local/install/scripts
+RUN chmod +x /usr/local/install/scripts/*.sh
+RUN for script in /usr/local/install/scripts/*.sh; do bash "$script"; done
+
 RUN mkdir -p /actions-runner
 WORKDIR /actions-runner
 
