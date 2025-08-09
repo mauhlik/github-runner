@@ -9,7 +9,7 @@ ENV LANG=en_US.UTF-8 \
     TZ="Europe/Prague" \
     UBUNTU_VERSION_NAME=noble
 
-RUN apt-get update && apt-get install -y curl jq locales libicu-dev && locale-gen en_US.UTF-8
+RUN apt-get update && apt-get install -y curl jq locales libicu-dev git && locale-gen en_US.UTF-8
 
 RUN mkdir -p /actions-runner
 WORKDIR /actions-runner
