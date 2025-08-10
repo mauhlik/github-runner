@@ -38,5 +38,9 @@ RUN ./bin/installdependencies.sh
 
 COPY entrypoint.sh /actions-runner/entrypoint.sh
 RUN chmod +x /actions-runner/entrypoint.sh
+
+RUN chown -R 1001:1001 /actions-runner
+USER 1001
+
 ENTRYPOINT ["/actions-runner/entrypoint.sh"]
 
