@@ -45,6 +45,9 @@ if [[ "$EPHEMERAL_RUNNER" == "true" ]]; then
     COMMAND_OPTS+=("--ephemeral")
 fi
 
+# Set user
+chown -R "$(id -u)":"$(id -g)" /actions-runner
+
 echo "Configuring runner..."
 ./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token" "${COMMAND_OPTS[@]}"
 
