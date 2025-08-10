@@ -52,8 +52,8 @@ install_binary_from_github() {
     tar -xzf "${tmpdir}/${archive}" -C "${tmpdir}"
 
     log "Installing binary to /usr/local/bin..."
-    sudo mv "${tmpdir}/${binary_path}" /usr/local/bin/
-    sudo chmod +x /usr/local/bin/$(basename "${binary_path}")
+    mv "${tmpdir}/${binary_path}" /usr/local/bin/
+    chmod +x /usr/local/bin/$(basename "${binary_path}")
 
     rm -rf "${tmpdir}"
     log "✅ Installed $(basename "${binary_path}") from ${repo} ${version}"
