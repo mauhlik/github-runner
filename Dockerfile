@@ -18,6 +18,7 @@ RUN set -e; \
         echo "Running $script"; \
         source "$script"; \
     done
+RUN rm -rf /usr/local/install
 
 RUN mkdir -p /actions-runner
 WORKDIR /actions-runner
