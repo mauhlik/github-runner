@@ -1,5 +1,6 @@
 FROM ubuntu:24.04
 
+ARG TARGETARCH
 ARG RUNNER_VERSION=2.327.1
 
 ENV LANG=en_US.UTF-8 \
@@ -23,10 +24,15 @@ RUN rm -rf /usr/local/install
 RUN mkdir -p /actions-runner
 WORKDIR /actions-runner
 
-RUN curl -o actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz -L \
-    https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz && \
-    tar xzf ./actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz && \
-    rm ./actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
+RUN ARCHIVE_ARCH=$( \
+      if [ "$TARGETARCH" = "arm64" ]; then echo "arm64"; \
+      elif [ "$TARGETARCH" = "amd64" ]; then echo "x64"; \
+      else echo "$TARGETARCH"; fi \
+    ) && \
+    curl -o actions-runner-linux-${ARCHIVE_ARCH}-${RUNNER_VERSION}.tar.gz -L \
+      https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-${ARCHIVE_ARCH}-${RUNNER_VERSION}.tar.gz && \
+    tar xzf ./actions-runner-linux-${ARCHIVE_ARCH}-${RUNNER_VERSION}.tar.gz && \
+    rm ./actions-runner-linux-${ARCHIVE_ARCH}-${RUNNER_VERSION}.tar.gz
 
 RUN ./bin/installdependencies.sh
 
