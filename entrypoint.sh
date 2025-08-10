@@ -45,11 +45,15 @@ if [[ "$EPHEMERAL_RUNNER" == "true" ]]; then
     COMMAND_OPTS+=("--ephemeral")
 fi
 
+RUNTIME_UID="${PUID:-1001}"
+RUNTIME_GID="${GUID:-1001}"
 # Set user
-chown -R "$(id -u)":"$(id -g)" /actions-runner
+chown -R "${RUNTIME_UID}:${RUNTIME_GID}" /actions-runner /home || true
+
+
 
 echo "Configuring runner..."
-./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token" "${COMMAND_OPTS[@]}"
+exec su-exec "${RUNTIME_UID}:${RUNTIME_GID}" ./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token" "${COMMAND_OPTS[@]}"
 
 echo "Starting runner..."
-./run.sh
+exec su-exec "${RUNTIME_UID}:${RUNTIME_GID}" ./run.sh
