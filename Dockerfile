@@ -39,8 +39,8 @@ RUN ./bin/installdependencies.sh
 COPY entrypoint.sh /actions-runner/entrypoint.sh
 RUN chmod +x /actions-runner/entrypoint.sh
 
-RUN groupadd runner \
-    && useradd runner --shell /bin/bash --create-home runner
+RUN groupadd --gid 1001 runner \
+    && useradd --uid 1001 --gid runner -m -s /bin/bash runner
 
 ENTRYPOINT ["/actions-runner/entrypoint.sh"]
 
