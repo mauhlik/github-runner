@@ -10,7 +10,7 @@ jobs:
     build-and-release:
       name: Build and Release
       runs-on: ubuntu-24.04
-      timeout-minutes: 10
+      timeout-minutes: 15
       environment: default
       env:
         REGISTRY_USERNAME: ${{ vars.CONTAINER_REGISTRY_USERNAME }}
