@@ -61,7 +61,7 @@ if [ "$(id -u runner)" != "$RUNTIME_UID" ]; then
 fi
 
 echo "Configuring runner..."
-exec su-exec "${RUNTIME_UID}:${RUNTIME_GID}" ./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token" "${COMMAND_OPTS[@]}"
+exec su -s /bin/bash runner -c  ./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token" "${COMMAND_OPTS[@]}"
 
 echo "Starting runner..."
-exec su-exec "${RUNTIME_UID}:${RUNTIME_GID}" ./run.sh
+exec su -s /bin/bash runner -c ./run.sh
