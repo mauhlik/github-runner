@@ -20,7 +20,7 @@ log() {
 #######################################
 get_latest_release() {
     local repo="$1"
-    curl -s "https://api.github.com/repos/${repo}/releases/latest" \
+    curl -ns "https://api.github.com/repos/${repo}/releases/latest" \
         | grep tag_name \
         | cut -d '"' -f 4
 }
@@ -46,7 +46,7 @@ install_binary_from_github() {
     tmpdir="$(mktemp -d)"
 
     log "Downloading ${repo} ${version}..."
-    curl -L -o "${tmpdir}/${archive}" "${url}"
+    curl -L -n -o "${tmpdir}/${archive}" "${url}"
 
     log "Extracting..."
     tar -xzf "${tmpdir}/${archive}" -C "${tmpdir}"
