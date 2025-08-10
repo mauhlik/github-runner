@@ -48,9 +48,17 @@ fi
 RUNTIME_UID="${PUID:-1001}"
 RUNTIME_GID="${GUID:-1001}"
 # Set user
-chown -R "${RUNTIME_UID}:${RUNTIME_GID}" /actions-runner /home || true
+chown -R "${RUNTIME_UID}:${RUNTIME_GID}" /actions-runner /home/runner || true
 
+# Change GID if needed
+if [ "$(id -g runner)" != "$RUNTIME_GID" ]; then
+    groupmod -o -g "$RUNTIME_GID" runner
+fi
 
+# Change UID if needed
+if [ "$(id -u runner)" != "$RUNTIME_UID" ]; then
+    usermod -o -u "$RUNTIME_UID" runner
+fi
 
 echo "Configuring runner..."
 exec su-exec "${RUNTIME_UID}:${RUNTIME_GID}" ./config.sh --url ${GITHUB_BASE_URL}/${OWNER} --token "$registration_token" "${COMMAND_OPTS[@]}"
